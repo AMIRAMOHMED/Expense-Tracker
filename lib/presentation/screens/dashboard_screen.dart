@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/logic/expense_cubit.dart';
-import '../../domain/logic/expense_state.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -12,46 +11,47 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<ExpenseCubit>()..loadExpenses(),
-      child: const SafeArea(child: Scaffold(body: ExpenseDashboard())),
-    );
-  }
-}
-
-class ExpenseDashboard extends StatelessWidget {
-  const ExpenseDashboard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ExpenseCubit, ExpenseState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (state.errorMessage != null) {
-          return Center(child: Text('Error: ${state.errorMessage}'));
-        }
-
-        if (state.expenses.isEmpty) {
-          return const Center(child: Text('No expenses found'));
-        }
-
-        // Print to log for testing
-        for (var expense in state.expenses) {
-          debugPrint('Expense: ${expense.toString()}');
-        }
-
-        return ListView.builder(
-          itemCount: state.expenses.length,
-          itemBuilder: (context, index) {
-            final expense = state.expenses[index];
-            return ListTile(
-              title: Text(expense.title),
-              subtitle: Text('Amount: \$${expense.amount.toString()}'),
-            );
-          },
-        );
-      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              const Center(child: Text(' Dashboard Screen')),
+              DraggableScrollableSheet(
+                initialChildSize: 0.25,
+                minChildSize: 0.25,
+                maxChildSize: 0.9,
+                builder: (
+                  BuildContext context,
+                  ScrollController scrollController,
+                ) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, -2),
+                        ),
+                      ],
+                    ),
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: 5,
+                      itemBuilder:
+                          (context, index) =>
+                              ListTile(title: Text(" Item $index")),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

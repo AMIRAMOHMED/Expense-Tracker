@@ -11,7 +11,7 @@ class ExpenseLocalDataSourceImpl implements ExpenseLocalDataSource {
   Future<List<ExpenseModel>> getExpenses() async {
     final db = await databaseHelper.database;
     final maps = await db.query(DatabaseHelper.tableName);
-    return maps.map((map) => ExpenseModel.fromMap(map)).toList();
+    return maps.map((map) => ExpenseModel.fromJson(map)).toList();
   }
 
   @override
@@ -23,7 +23,7 @@ class ExpenseLocalDataSourceImpl implements ExpenseLocalDataSource {
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return ExpenseModel.fromMap(maps.first);
+      return ExpenseModel.fromJson(maps.first);
     } else {
       throw Exception('Expense not found');
     }
@@ -32,7 +32,7 @@ class ExpenseLocalDataSourceImpl implements ExpenseLocalDataSource {
   @override
   Future<void> addExpense(ExpenseModel expense) async {
     final db = await databaseHelper.database;
-    await db.insert(DatabaseHelper.tableName, expense.toMap());
+    await db.insert(DatabaseHelper.tableName, expense.toJson());
   }
 
   @override
@@ -40,7 +40,7 @@ class ExpenseLocalDataSourceImpl implements ExpenseLocalDataSource {
     final db = await databaseHelper.database;
     await db.update(
       DatabaseHelper.tableName,
-      expense.toMap(),
+      expense.toJson(),
       where: 'id = ?',
       whereArgs: [expense.id],
     );
