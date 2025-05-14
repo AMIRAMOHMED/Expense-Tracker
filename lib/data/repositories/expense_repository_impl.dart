@@ -16,7 +16,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
     final expenses = await localDataSource.getExpenses();
     return expenses.where((expense) {
       bool matchesSearch =
-          searchQuery == null || expense.title.contains(searchQuery);
+          searchQuery == null || expense.name.contains(searchQuery);
       DateTime expenseDate = DateTime.parse(expense.date);
       bool matchesDate =
           (startDate == null || expenseDate.compareTo(startDate) >= 0) &&

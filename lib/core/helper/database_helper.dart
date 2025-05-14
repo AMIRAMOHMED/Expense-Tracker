@@ -15,10 +15,10 @@ class DatabaseHelper {
     final path = join(await getDatabasesPath(), 'expenses.db');
     return await openDatabase(
       path,
-      version: 2,
+      version: 1,
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE $tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, amount REAL, date TEXT, category INTEGER)',
+          'CREATE TABLE $tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount REAL, date TEXT, categoryId INTEGER)',
         );
       },
     );

@@ -6,7 +6,7 @@ import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 
 void main() async {
-  await ScreenUtil.ensureScreenSize();
+  WidgetsFlutterBinding.ensureInitialized();
   setup();
   runApp(const MyApp());
 }
@@ -16,10 +16,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: AppRouter().generateRoute,
-      initialRoute: Routes.addExpenseScreen,
+    return ScreenUtilInit(
+      designSize: Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: AppRouter().generateRoute,
+          initialRoute: Routes.addExpenseScreen,
+        );
+      },
     );
   }
 }

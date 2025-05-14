@@ -1,0 +1,107 @@
+import 'package:flutter/material.dart';
+
+import '../../core/theming/colors.dart';
+import '../../core/theming/styles.dart';
+import '../../data/models/category_model.dart';
+import '../widgets/custom_text_form_field.dart';
+
+class CategoryDropdownField extends StatefulWidget {
+  final Function(int selectedId) onCategorySelected;
+  final List<CategoryModel> categories;
+  final String? Function(CategoryModel?)? validator;
+
+  const CategoryDropdownField({
+    super.key,
+    required this.onCategorySelected,
+    required this.categories,
+    this.validator,
+  });
+
+  @override
+  State<CategoryDropdownField> createState() => _CategoryDropdownFieldState();
+}
+
+class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
+  CategoryModel? _selectedCategory;
+  bool _isExpanded = false;
+  final TextEditingController _textController = TextEditingController();
+  final GlobalKey<FormFieldState> _fieldKey = GlobalKey<FormFieldState>();
+
+  void _toggleDropdown() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
+  }
+
+  void _selectCategory(CategoryModel category) {
+    setState(() {
+      _selectedCategory = category;
+      _textController.text = category.name;
+      _isExpanded = false;
+    });
+    widget.onCategorySelected(category.id);
+    _fieldKey.currentState?.validate();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: _toggleDropdown,
+          child: FormField<CategoryModel>(
+            key: _fieldKey,
+            validator: widget.validator,
+            builder: (fieldState) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextFormField(
+                    textFieldController: _textController,
+                    hintText: 'Select Category',
+                    readOnly: true,
+                    suffixIcon: Icon(
+                      _isExpanded
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                      color: AppColors.greyB2,
+                    ),
+                    onTap: _toggleDropdown,
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        if (_isExpanded)
+          Container(
+            margin: const EdgeInsets.only(top: 4),
+            decoration: BoxDecoration(
+              color: AppColors.whiteFF,
+              border: Border.all(color: AppColors.greyB2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.categories.length,
+              itemBuilder: (context, index) {
+                final category = widget.categories[index];
+                return ListTile(
+                  onTap: () => _selectCategory(category),
+                  leading: Icon(category.icon, color: AppColors.black00),
+                  title: Text(category.name, style: TextStyles.small),
+                );
+              },
+            ),
+          ),
+      ],
+    );
+  }
+}
