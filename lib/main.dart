@@ -1,7 +1,13 @@
-import 'package:expense_tracker/presentation/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+import 'core/di/service_locator.dart';
+import 'core/routing/app_router.dart';
+import 'core/routing/routes.dart';
+
+void main() async {
+  await ScreenUtil.ensureScreenSize();
+  setup();
   runApp(const MyApp());
 }
 
@@ -11,9 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const DashboardScreen(),
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRouter().generateRoute,
+      initialRoute: Routes.dashboardScreen,
     );
   }
 }
-
-
