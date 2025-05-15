@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/routing/routes.dart';
 import '../../core/theming/colors.dart';
 import '../../core/theming/styles.dart';
+import '../../domain/logic/expense_cubit.dart';
 
 class AddExpenseButton extends StatelessWidget {
   const AddExpenseButton({super.key});
@@ -13,8 +15,14 @@ class AddExpenseButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         highlightColor: Colors.transparent,
-        onTap: () {
-          Navigator.pushNamed(context, Routes.addExpenseScreen);
+        onTap: () async {
+          final result = await Navigator.pushNamed(
+              context,
+              Routes.addExpenseScreen
+          );
+          if (result == true) {
+            context.read<ExpenseCubit>().loadExpenses();
+          }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
