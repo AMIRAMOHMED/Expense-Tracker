@@ -44,13 +44,7 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     const Center(child: Text(' Dashboard Screen')),
                     DraggableExpenses(),
-                    Positioned(
-                      // Modified this section
-                      bottom: 20,
-                      left: 20,
-                      right: 20,
-                      child: AddExpenseButton(),
-                    ),
+                    AddExpenseButton(),
                   ],
                 ),
               );
