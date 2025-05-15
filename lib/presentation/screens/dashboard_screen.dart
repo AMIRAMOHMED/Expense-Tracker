@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/theming/colors.dart';
+import '../../domain/helper/expense_summary.dart';
 import '../../domain/logic/expense_cubit.dart';
 import '../../domain/logic/expense_state.dart';
 import '../../domain/logic/expense_summary_cubit.dart';
 import '../widgets/EmptySection.dart';
 import '../widgets/add_expense_button.dart';
+import '../widgets/dashboard_content.dart';
 import '../widgets/draggable_expenses.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -40,11 +42,17 @@ class DashboardScreen extends StatelessWidget {
                         getIt<ExpenseSummaryCubit>()
                           ..fetchTotalExpenses()
                           ..fetchExpensePercentages(),
-                child: Stack(
+                child: Column(
                   children: [
-                    const Center(child: Text(' Dashboard Screen')),
-                    DraggableExpenses(),
                     AddExpenseButton(),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          DashboardContent(summary: ExpenseSummary(state.expenses)),
+                          DraggableExpenses(),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               );

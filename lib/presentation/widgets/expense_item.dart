@@ -6,15 +6,17 @@ import '../../core/theming/styles.dart';
 import '../../data/models/category_model.dart';
 import '../../data/models/expense_model.dart';
 import '../../domain/logic/expense_summary_cubit.dart';
+
 class ExpenseItem extends StatelessWidget {
   const ExpenseItem({super.key, required this.expense});
+
   final ExpenseModel expense;
 
   @override
-
   @override
   Widget build(BuildContext context) {
-    final expensePercentages = context.read<ExpenseSummaryCubit>().state.expensePercentages;
+    final expensePercentages =
+        context.read<ExpenseSummaryCubit>().state.expensePercentages;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
       child: Row(
