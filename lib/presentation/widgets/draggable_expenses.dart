@@ -1,3 +1,4 @@
+import 'package:expense_tracker/core/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,12 +28,29 @@ class DraggableExpenses extends StatelessWidget {
               ),
             ],
           ),
-          child: ListView.builder(
-            controller: scrollController,
-            itemCount: expenses.length,
-            itemBuilder: (context, index) {
-              return ExpenseItem(expense: expenses[index]);
-            },
+          child: Column(
+            children: [
+              // Drag handle
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                width: 40,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: AppColors.grey73,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              // ListView for expenses
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: expenses.length,
+                  itemBuilder: (context, index) {
+                    return ExpenseItem(expense: expenses[index]);
+                  },
+                ),
+              ),
+            ],
           ),
         );
       },
