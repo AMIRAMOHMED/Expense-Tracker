@@ -16,12 +16,17 @@ class ExpenseCalculator {
 
     final total = expenses.fold(0.0, (sum, e) => sum + e.amount);
     if (total == 0) return {};
-
+    print("Total Expenses: $total");
     final percentageMap = <int, double>{};
 
     for (final expense in expenses) {
       percentageMap[expense.id!] = (expense.amount / total) * 100;
+      print(
+        "Expense Amount: ${expense.amount}, Percentage: ${percentageMap[expense.id!]}",
+      );
     }
+
+    print("Percentage Map fom Calculator: $percentageMap");
 
     return percentageMap;
   }

@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../repositories/expense_summary_repository.dart';
+import '../helper/expense_calculator.dart';
 import 'expense_summary_state.dart';
 
 class ExpenseSummaryCubit extends Cubit<ExpenseSummaryState> {
-  final ExpenseSummaryRepository repository;
+  final ExpenseCalculator repository;
 
   ExpenseSummaryCubit(this.repository) : super(const ExpenseSummaryState());
 
@@ -41,7 +41,6 @@ class ExpenseSummaryCubit extends Cubit<ExpenseSummaryState> {
 
     try {
       final expensePercentages = await repository.getExpensePercentages();
-      print("Expense Percentages: $expensePercentages" );
       emit(
         state.copyWith(
           expensePercentages: expensePercentages,

@@ -9,7 +9,6 @@ import '../../domain/logic/expense_summary_cubit.dart';
 import '../widgets/EmptySection.dart';
 import '../widgets/add_expense_button.dart';
 import '../widgets/draggable_expenses.dart';
-import '../widgets/expense_item.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -62,4 +61,3 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 }
-

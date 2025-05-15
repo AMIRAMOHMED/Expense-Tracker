@@ -11,8 +11,8 @@ class DraggableExpenses extends StatelessWidget {
   Widget build(BuildContext context) {
     final expenses = context.read<ExpenseCubit>().state.expenses;
     return DraggableScrollableSheet(
-      initialChildSize: 0.25,
-      minChildSize: 0.25,
+      initialChildSize: 0.5,
+      minChildSize: 0.5,
       maxChildSize: 0.9,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(

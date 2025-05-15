@@ -26,7 +26,7 @@ class ExpenseItem extends StatelessWidget {
             children: [
               Icon(_getCategoryForExpense().icon),
               SizedBox(width: 10.w),
-              Text(_getCategoryForExpense().name, style: TextStyles.regular),
+              Text(expense.name, style: TextStyles.regular),
             ],
           ),
           Column(
@@ -35,7 +35,7 @@ class ExpenseItem extends StatelessWidget {
             children: [
               Text("${expense.amount} EGP", style: TextStyles.regular),
               Text(
-                "${(expensePercentages?[expense.categoryId] ?? 0).toStringAsFixed(2)} % of total expenses",
+                "${(expensePercentages?[expense.id] ?? 0).toStringAsFixed(2)}% of total",
               ),
             ],
           ),

@@ -6,7 +6,6 @@ abstract class ExpenseRepository {
     DateTime? startDate,
     DateTime? endDate,
   });
-
   Future<ExpenseModel> getExpenseById(int id);
 
   Future<void> addExpense(ExpenseModel expense);
