@@ -36,7 +36,7 @@ class DashboardContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.grey26.withOpacity(0.2),
+                  color: AppColors.grey26.withValues(alpha: 0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),

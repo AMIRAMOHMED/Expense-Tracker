@@ -8,6 +8,7 @@ import '../../core/theming/colors.dart';
 import '../../core/theming/styles.dart';
 import '../../data/models/category_model.dart';
 import '../../data/models/expense_model.dart';
+import '../widgets/add_expenses_listener.dart';
 import '../widgets/category_dropdown_field.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';
@@ -36,77 +37,79 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.whiteFF,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 25.h),
-                  Center(child: Text("Add Expense", style: TextStyles.title.copyWith(color: AppColors.primaryColor))),
-                  SizedBox(height: 20.h),
-                  CustomTextFormField(
-                    textFieldController: nameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return " Please Enter Your Expense Name ";
-                      }
-                    },
-                    hintText: "Expense Name",
-                  ),
-                  SizedBox(height: 20.h),
+        body:AddExpensesListener(child:
+        SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 25.h),
+                    Center(child: Text("Add Expense", style: TextStyles.title.copyWith(color: AppColors.primaryColor))),
+                    SizedBox(height: 20.h),
+                    CustomTextFormField(
+                      textFieldController: nameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return " Please Enter Your Expense Name ";
+                        }
+                      },
+                      hintText: "Expense Name",
+                    ),
+                    SizedBox(height: 20.h),
 
-                  CustomTextFormField(
-                    textFieldController: amountController,
-                    hintText: "Enter Expense Amount",
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please Enter Your Expense Amount";
-                      }
-                    },
+                    CustomTextFormField(
+                      textFieldController: amountController,
+                      hintText: "Enter Expense Amount",
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please Enter Your Expense Amount";
+                        }
+                      },
 
-                  ),
-                  SizedBox(height: 20.h),
+                    ),
+                    SizedBox(height: 20.h),
 
-                  CategoryDropdownField(
-                    categories: CategoryModel.categories,
-                    onCategorySelected: (id) {
-                      setState(() {
-                        categoryId = id;
-                      });
-                      // use id
-                    },
-                  ),
-                  SizedBox(height: 20.h),
-                  DatePickerTextField(
-                    dateController: dataController,
-                  ),
-                  SizedBox(height: 20.h),
-                  CustomButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate() && categoryId != null) {
-                        debugPrint("form is valid");
-                        context
-                            .read<AddExpenseCubit>()
-                            .addExpense(
-                            ExpenseModel(
-                          name: nameController.text,
-                          amount: double.parse(amountController.text),
-                          categoryId: categoryId!,
-                          date: dataController.text,
-                        ));
+                    CategoryDropdownField(
+                      categories: CategoryModel.categories,
+                      onCategorySelected: (id) {
+                        setState(() {
+                          categoryId = id;
+                        });
+                        // use id
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                    DatePickerTextField(
+                      dateController: dataController,
+                    ),
+                    SizedBox(height: 20.h),
+                    CustomButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate() && categoryId != null) {
+                          debugPrint("form is valid");
+                          context
+                              .read<AddExpenseCubit>()
+                              .addExpense(
+                              ExpenseModel(
+                            name: nameController.text,
+                            amount: double.parse(amountController.text),
+                            categoryId: categoryId!,
+                            date: dataController.text,
+                          ));
 
-                      } else {
-                        debugPrint("form is not valid");
-                      }
-                    },
-                    text: "Add expense",
-                  ),
-                  SizedBox(height: 8.h),
-                ],
+                        } else {
+                          debugPrint("form is not valid");
+                        }
+                      },
+                      text: "Add expense",
+                    ),
+                    SizedBox(height: 8.h),
+                  ],
+                ),
               ),
             ),
           ),
