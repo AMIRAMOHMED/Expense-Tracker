@@ -7,30 +7,6 @@ class ExpenseSummaryCubit extends Cubit<ExpenseSummaryState> {
   final ExpenseCalculator repository;
 
   ExpenseSummaryCubit(this.repository) : super(const ExpenseSummaryState());
-
-  Future<void> fetchTotalExpenses() async {
-    emit(
-      state.copyWith(isTotalExpensesLoading: true, totalExpensesError: null),
-    );
-
-    try {
-      final totalExpenses = await repository.getTotalExpenses();
-      emit(
-        state.copyWith(
-          totalExpenses: totalExpenses,
-          isTotalExpensesLoading: false,
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          isTotalExpensesLoading: false,
-          totalExpensesError: e.toString(),
-        ),
-      );
-    }
-  }
-
   Future<void> fetchExpensePercentages() async {
     emit(
       state.copyWith(

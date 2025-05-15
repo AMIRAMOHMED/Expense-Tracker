@@ -40,7 +40,6 @@ class DashboardScreen extends StatelessWidget {
                 create:
                     (context) =>
                         getIt<ExpenseSummaryCubit>()
-                          ..fetchTotalExpenses()
                           ..fetchExpensePercentages(),
                 child: Column(
                   children: [
