@@ -51,4 +51,5 @@ class ExpenseLocalDataSourceImpl implements ExpenseLocalDataSource {
     final db = await databaseHelper.database;
     await db.delete(DatabaseHelper.tableName, where: 'id = ?', whereArgs: [id]);
   }
+
 }

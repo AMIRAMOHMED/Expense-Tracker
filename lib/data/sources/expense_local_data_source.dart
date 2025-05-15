@@ -6,4 +6,5 @@ abstract class ExpenseLocalDataSource {
   Future<void> addExpense(ExpenseModel expense);
   Future<void> updateExpense(ExpenseModel expense);
   Future<void> deleteExpense(int id);
+
 }

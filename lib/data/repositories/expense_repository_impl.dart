@@ -20,7 +20,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
       DateTime expenseDate = DateTime.parse(expense.date);
       bool matchesDate =
           (startDate == null || expenseDate.compareTo(startDate) >= 0) &&
-              (endDate == null || expenseDate.compareTo(endDate) <= 0);
+          (endDate == null || expenseDate.compareTo(endDate) <= 0);
       return matchesSearch && matchesDate;
     }).toList();
   }

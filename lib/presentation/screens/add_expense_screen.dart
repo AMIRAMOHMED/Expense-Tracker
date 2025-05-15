@@ -31,7 +31,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    dataController = TextEditingController(text: DateFormat('d/M/y').format(DateTime.now()),
+    dataController = TextEditingController(text:DateFormat('yyyy-MM-dd').format(DateTime.now()),
     );
     return SafeArea(
       child: Scaffold(
