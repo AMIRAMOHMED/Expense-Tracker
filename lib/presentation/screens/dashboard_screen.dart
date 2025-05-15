@@ -39,15 +39,19 @@ class DashboardScreen extends StatelessWidget {
               return BlocProvider(
                 create:
                     (context) =>
-                        getIt<ExpenseSummaryCubit>()
-                          ..fetchExpensePercentages(),
+                        getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
                 child: Column(
                   children: [
                     AddExpenseButton(),
                     Expanded(
                       child: Stack(
                         children: [
-                          DashboardContent(summary: ExpenseSummary(state.expenses)),
+                          FractionallySizedBox(
+                            heightFactor: 0.7,
+                            child: DashboardContent(
+                              summary: ExpenseSummary(state.expenses),
+                            ),
+                          ),
                           DraggableExpenses(),
                         ],
                       ),
