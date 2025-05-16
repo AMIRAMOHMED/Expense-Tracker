@@ -1,7 +1,9 @@
 import 'package:expense_tracker/core/theming/colors.dart';
+import 'package:expense_tracker/domain/logic/expense_summary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/di/service_locator.dart';
 import '../../domain/logic/expense_cubit.dart';
 import 'expense_item.dart';
 
@@ -12,8 +14,8 @@ class DraggableExpenses extends StatelessWidget {
   Widget build(BuildContext context) {
     final expenses = context.read<ExpenseCubit>().state.expenses;
     return DraggableScrollableSheet(
-      initialChildSize: 0.30,
-      minChildSize: 0.30,
+      initialChildSize: 0.20,
+      minChildSize: 0.20,
       maxChildSize: 0.9,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
@@ -41,13 +43,18 @@ class DraggableExpenses extends StatelessWidget {
                 ),
               ),
               // ListView for expenses
-              Expanded(
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: expenses.length,
-                  itemBuilder: (context, index) {
-                    return ExpenseItem(expense: expenses[index]);
-                  },
+              BlocProvider(
+                create:
+                    (context) =>
+                        getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
+                child: Expanded(
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: expenses.length,
+                    itemBuilder: (context, index) {
+                      return ExpenseItem(expense: expenses[index]);
+                    },
+                  ),
                 ),
               ),
             ],

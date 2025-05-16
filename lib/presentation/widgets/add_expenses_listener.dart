@@ -20,7 +20,7 @@ class AddExpensesListener extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Expense added successfully')),
           );
-          Navigator.pop(context , true);
+          Navigator.pop(context, true);
         }
       },
       child: child,

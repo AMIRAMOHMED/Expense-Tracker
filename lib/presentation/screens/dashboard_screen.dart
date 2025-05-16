@@ -6,7 +6,6 @@ import '../../core/theming/colors.dart';
 import '../../domain/helper/expense_summary.dart';
 import '../../domain/logic/expense_cubit.dart';
 import '../../domain/logic/expense_state.dart';
-import '../../domain/logic/expense_summary_cubit.dart';
 import '../widgets/EmptySection.dart';
 import '../widgets/add_expense_button.dart';
 import '../widgets/dashboard_content.dart';
@@ -27,27 +26,17 @@ class DashboardScreen extends StatelessWidget {
             builder: (context, state) {
               if (state.isLoading) {
                 return const Center(child: CircularProgressIndicator());
-              }
-
-              if (state.errorMessage != null) {
-                return Center(child: Text('Error: ${state.errorMessage}'));
-              }
-
-              if (state.expenses.isEmpty) {
+              } else if (state.expenses.isEmpty) {
                 return const EmptySection();
-              }
-              return BlocProvider(
-                create:
-                    (context) =>
-                        getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
-                child: Column(
+              } else {
+                return Column(
                   children: [
-                    AddExpenseButton(),
+                    const AddExpenseButton(),
                     Expanded(
                       child: Stack(
                         children: [
                           FractionallySizedBox(
-                            heightFactor: 0.7,
+                            heightFactor: 0.8,
                             child: DashboardContent(
                               summary: ExpenseSummary(state.expenses),
                             ),
@@ -57,8 +46,8 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              );
+                );
+              }
             },
           ),
         ),

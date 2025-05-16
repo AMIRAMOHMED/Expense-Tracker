@@ -1,11 +1,13 @@
 import 'package:expense_tracker/core/theming/AppAssets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/routing/routes.dart';
 import '../../core/theming/colors.dart';
 import '../../core/theming/styles.dart';
+import '../../domain/logic/expense_cubit.dart';
 import 'custom_button.dart';
 
 class EmptySection extends StatelessWidget {
@@ -26,8 +28,14 @@ class EmptySection extends StatelessWidget {
           CustomButton(
             text: 'Add Expense',
             color: AppColors.primaryColor,
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.addExpenseScreen);
+            onPressed: () async {
+              final result = await Navigator.pushNamed(
+                context,
+                Routes.addExpenseScreen,
+              );
+              if (result == true) {
+                context.read<ExpenseCubit>().loadExpenses();
+              }
             },
           ),
         ],

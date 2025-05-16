@@ -18,7 +18,8 @@ class ExpenseModel {
     required this.categoryId,
   });
 
-  factory ExpenseModel.fromJson(Map<String, dynamic> json) => _$ExpenseModelFromJson(json);
+  factory ExpenseModel.fromJson(Map<String, dynamic> json) =>
+      _$ExpenseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ExpenseModelToJson(this);
 }
