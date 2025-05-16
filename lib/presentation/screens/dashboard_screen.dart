@@ -8,8 +8,8 @@ import '../../domain/helper/expense_summary.dart';
 import '../../domain/logic/expense_cubit.dart';
 import '../../domain/logic/expense_state.dart';
 import '../widgets/dashboardScreen/EmptySection.dart';
-import '../widgets/dashboardScreen/add_expense_button.dart';
 import '../widgets/dashboardScreen/dashboard_content.dart';
+import '../widgets/dashboardScreen/dashboard_header.dart';
 import '../widgets/dashboardScreen/draggable_expenses.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -18,7 +18,8 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
+      create:
+          (context) => getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.whiteFF,
@@ -31,7 +32,7 @@ class DashboardScreen extends StatelessWidget {
               } else {
                 return Column(
                   children: [
-                    const AddExpenseButton(),
+                    DashboardHeader(),
                     Expanded(
                       child: Stack(
                         children: [

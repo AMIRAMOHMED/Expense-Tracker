@@ -1,11 +1,13 @@
-import 'package:expense_tracker/presentation/widgets/dashboardScreen/stat_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/theming/colors.dart';
+import '../../../core/theming/styles.dart';
 import '../../../data/models/category_model.dart';
 import '../../../domain/helper/expense_summary.dart';
 import 'category_card.dart';
+import 'stat_row.dart';
 
 class DashboardContent extends StatelessWidget {
   final ExpenseSummary summary;
@@ -14,6 +16,7 @@ class DashboardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     final categorySummaries =
         CategoryModel.categories
             .map(
@@ -29,6 +32,7 @@ class DashboardContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 16.h),
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
@@ -45,29 +49,30 @@ class DashboardContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('Spending Summary', style: TextStyles.title),
+                SizedBox(height: 8.h),
                 StatRow(
                   icon: Icons.calendar_month,
-                  label: 'monthly',
+                  label: DateFormat('MMMM y').format(now),
                   amount: summary.monthlySpending,
                 ),
                 SizedBox(height: 12.h),
                 StatRow(
                   icon: Icons.calendar_today,
-                  label: 'Yearly',
+                  label:" Yearly ${DateFormat('y').format(now)}",
                   amount: summary.yearlySpending,
                 ),
               ],
             ),
           ),
           SizedBox(height: 10.h),
-          // Category Grid
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.w,
                 mainAxisSpacing: 10.h,
-                childAspectRatio: 1.3,
+                childAspectRatio: 1.2,
               ),
               itemCount: categorySummaries.length,
               itemBuilder: (context, index) {
@@ -79,7 +84,6 @@ class DashboardContent extends StatelessWidget {
               },
             ),
           ),
-
         ],
       ),
     );
