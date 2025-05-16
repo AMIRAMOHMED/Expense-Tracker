@@ -8,25 +8,28 @@ class ExpenseSummary {
 
   ExpenseSummary(this.expenses) {
     final now = DateTime.now();
-
-    // Monthly spending
-    final firstDayOfMonth = DateTime(now.year, now.month, 1);
-    final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
-    monthlySpending = expenses
-        .where((e) =>
-    DateTime.parse(e.date).isAfter(firstDayOfMonth) &&
-        DateTime.parse(e.date).isBefore(lastDayOfMonth))
-        .fold(0.0, (sum, e) => sum + e.amount);
-
-    // Yearly spending
     final currentYear = now.year;
+    final currentMonth = now.month;
+    //Filter expenses by current year and month
+    final currentMonthExpenses =
+        expenses.where((e) {
+          final expenseDate = DateTime.parse(e.date);
+          return expenseDate.year == currentYear &&
+              expenseDate.month == currentMonth;
+        }).toList();
+    // Calculate monthly spending
+    monthlySpending = currentMonthExpenses.fold(
+      0.0,
+      (sum, e) => sum + e.amount,
+    );
+    //yearly spending
     yearlySpending = expenses
         .where((e) => DateTime.parse(e.date).year == currentYear)
         .fold(0.0, (sum, e) => sum + e.amount);
+    // category totals
 
-    // Category totals
     categoryTotals = {};
-    for (var expense in expenses) {
+    for (var expense in currentMonthExpenses) {
       categoryTotals[expense.categoryId] =
           (categoryTotals[expense.categoryId] ?? 0) + expense.amount;
     }
