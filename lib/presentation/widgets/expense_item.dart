@@ -13,7 +13,6 @@ class ExpenseItem extends StatelessWidget {
   final ExpenseModel expense;
 
   @override
-  @override
   Widget build(BuildContext context) {
     final expensePercentages =
         context.read<ExpenseSummaryCubit>().state.expensePercentages;

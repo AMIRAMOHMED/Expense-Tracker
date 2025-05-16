@@ -37,7 +37,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.whiteFF,
-        body:AddExpensesListener(child:
+        body: AddExpensesListener(child:
         SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

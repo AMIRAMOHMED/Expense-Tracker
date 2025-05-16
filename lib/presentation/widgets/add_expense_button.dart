@@ -1,3 +1,4 @@
+import 'package:expense_tracker/domain/logic/expense_summary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,11 +18,12 @@ class AddExpenseButton extends StatelessWidget {
         highlightColor: Colors.transparent,
         onTap: () async {
           final result = await Navigator.pushNamed(
-              context,
-              Routes.addExpenseScreen
+            context,
+            Routes.addExpenseScreen,
           );
           if (result == true) {
             context.read<ExpenseCubit>().loadExpenses();
+            context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
           }
         },
         child: Row(

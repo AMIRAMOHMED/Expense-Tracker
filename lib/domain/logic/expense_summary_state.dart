@@ -5,7 +5,6 @@ class ExpenseSummaryState extends Equatable {
   final Map<int, double>? expensePercentages;
   final bool isExpensePercentagesLoading;
   final String? expensePercentagesError;
-
   const ExpenseSummaryState({
     this.expensePercentages,
     this.isExpensePercentagesLoading = false,

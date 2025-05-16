@@ -7,6 +7,7 @@ class ExpenseSummaryCubit extends Cubit<ExpenseSummaryState> {
   final ExpenseCalculator repository;
 
   ExpenseSummaryCubit(this.repository) : super(const ExpenseSummaryState());
+
   Future<void> fetchExpensePercentages() async {
     emit(
       state.copyWith(
@@ -17,6 +18,9 @@ class ExpenseSummaryCubit extends Cubit<ExpenseSummaryState> {
 
     try {
       final expensePercentages = await repository.getExpensePercentages();
+      print("expensePercentages from cubit: ${state.expensePercentages}");
+      print("expensePercentages from cubit: $state");
+
       emit(
         state.copyWith(
           expensePercentages: expensePercentages,

@@ -8,6 +8,7 @@ import '../../core/routing/routes.dart';
 import '../../core/theming/colors.dart';
 import '../../core/theming/styles.dart';
 import '../../domain/logic/expense_cubit.dart';
+import '../../domain/logic/expense_summary_cubit.dart';
 import 'custom_button.dart';
 
 class EmptySection extends StatelessWidget {
@@ -35,6 +36,7 @@ class EmptySection extends StatelessWidget {
               );
               if (result == true) {
                 context.read<ExpenseCubit>().loadExpenses();
+                context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
               }
             },
           ),

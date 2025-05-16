@@ -25,8 +25,7 @@ class ExpenseCalculator {
         "Expense Amount: ${expense.amount}, Percentage: ${percentageMap[expense.id!]}",
       );
     }
-
-    print("Percentage Map fom Calculator: $percentageMap");
+    print("expensePercentages from Calculator: $percentageMap");
 
     return percentageMap;
   }

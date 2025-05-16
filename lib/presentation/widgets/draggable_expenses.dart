@@ -3,8 +3,8 @@ import 'package:expense_tracker/domain/logic/expense_summary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/di/service_locator.dart';
 import '../../domain/logic/expense_cubit.dart';
+import '../../domain/logic/expense_summary_state.dart';
 import 'expense_item.dart';
 
 class DraggableExpenses extends StatelessWidget {
@@ -43,18 +43,28 @@ class DraggableExpenses extends StatelessWidget {
                 ),
               ),
               // ListView for expenses
-              BlocProvider(
-                create:
-                    (context) =>
-                        getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
-                child: Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: expenses.length,
-                    itemBuilder: (context, index) {
-                      return ExpenseItem(expense: expenses[index]);
-                    },
-                  ),
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: expenses.length,
+                  itemBuilder: (context, index) {
+                    return BlocBuilder<
+                      ExpenseSummaryCubit,
+                      ExpenseSummaryState
+                    >(
+                      builder: (context, state) {
+                        if (state.isExpensePercentagesLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state.expensePercentages!.isNotEmpty) {
+                          return ExpenseItem(expense: expenses[index]);
+                        }
+                        return (const Center());
+                      },
+                    );
+                  },
                 ),
               ),
             ],
