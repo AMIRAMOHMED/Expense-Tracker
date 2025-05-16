@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/theming/colors.dart';
 import '../../core/theming/styles.dart';
-import '../widgets/add_expense_form.dart';
-import '../widgets/add_expenses_listener.dart';
+import '../widgets/AddExpenseScreen/add_expense_form.dart';
+import '../widgets/AddExpenseScreen/add_expenses_listener.dart';
 
 class AddExpenseScreen extends StatelessWidget {
   const AddExpenseScreen({super.key});

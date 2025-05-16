@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/theming/colors.dart';
-import '../../data/models/category_model.dart';
-import '../../data/models/expense_model.dart';
-import '../../domain/logic/expense_cubit.dart';
-import 'category_dropdown_field.dart';
-import 'custom_button.dart';
-import 'custom_text_form_field.dart';
-import 'date_picker_text_field.dart';
+import '../../../core/theming/colors.dart';
+import '../../../core/widgets/category_dropdown_field.dart';
+import '../../../data/models/category_model.dart';
+import '../../../data/models/expense_model.dart';
+import '../../../domain/logic/expense_cubit.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../core/widgets/custom_text_form_field.dart';
+import '../../../core/widgets/date_picker_text_field.dart';
 
 class EditExpenseForm extends StatefulWidget {
   const EditExpenseForm({super.key, required this.expense});

@@ -7,10 +7,10 @@ import '../../core/theming/colors.dart';
 import '../../domain/helper/expense_summary.dart';
 import '../../domain/logic/expense_cubit.dart';
 import '../../domain/logic/expense_state.dart';
-import '../widgets/EmptySection.dart';
-import '../widgets/add_expense_button.dart';
-import '../widgets/dashboard_content.dart';
-import '../widgets/draggable_expenses.dart';
+import '../widgets/dashboardScreen/EmptySection.dart';
+import '../widgets/dashboardScreen/add_expense_button.dart';
+import '../widgets/dashboardScreen/dashboard_content.dart';
+import '../widgets/dashboardScreen/draggable_expenses.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

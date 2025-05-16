@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theming/colors.dart';
-import '../../core/theming/styles.dart';
+import '../theming/colors.dart';
+import '../theming/styles.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
   CustomTextFormField({
     super.key,
     this.hintText,
@@ -28,42 +28,47 @@ class CustomTextFormField extends StatelessWidget {
   String? errorText;
 
   @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextFormField(
         style: TextStyles.small,
         enabled: true,
-        validator: validator != null ? (value) => validator!(value) : null,
-        keyboardType: keyboardType,
-        controller: textFieldController,
-        onChanged: onChanged,
-        readOnly: readOnly,
-        onTap: onTap,
+        validator: widget.validator != null ? (value) => widget.validator!(value) : null,
+        keyboardType: widget.keyboardType,
+        controller: widget.textFieldController,
+        onChanged: widget.onChanged,
+        readOnly: widget.readOnly,
+        onTap: widget.onTap,
 
         decoration: InputDecoration(
           filled: true,
           contentPadding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
           fillColor: AppColors.whiteFF,
-          suffixIcon: suffixIcon,
-          hintText: hintText,
+          suffixIcon: widget.suffixIcon,
+          hintText: widget.hintText,
           hintStyle: TextStyles.small.copyWith(color: AppColors.greyB2),
-          errorText: errorText,
+          errorText: widget.errorText,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: errorText == null ? AppColors.greyB2 : AppColors.redEB,
+              color: widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: errorText == null ? AppColors.greyB2 : AppColors.redEB,
+              color: widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
             ),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: errorText == null ? AppColors. greyB2 : AppColors.redEB,
+              color: widget.errorText == null ? AppColors. greyB2 : AppColors.redEB,
             ),
           ),
         ),

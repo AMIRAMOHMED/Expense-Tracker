@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/theming/colors.dart';
-import '../../core/theming/styles.dart';
-import '../../data/models/category_model.dart';
+import '../../../core/theming/colors.dart';
+import '../../../core/theming/styles.dart';
+import '../../../data/models/category_model.dart';
 
 class CategoryCard extends StatelessWidget {
   final CategoryModel category;

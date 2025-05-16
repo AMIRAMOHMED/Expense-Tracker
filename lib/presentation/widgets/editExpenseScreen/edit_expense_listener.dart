@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/logic/expense_cubit.dart';
-import '../../domain/logic/expense_state.dart';
+import '../../../domain/logic/expense_cubit.dart';
+import '../../../domain/logic/expense_state.dart';
 
 class EditExpenseListener extends StatelessWidget {
   final Widget child;

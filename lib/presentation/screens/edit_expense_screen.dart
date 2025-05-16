@@ -3,8 +3,8 @@ import 'package:expense_tracker/core/theming/styles.dart';
 import 'package:expense_tracker/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/edit_expense_form.dart';
-import '../widgets/edit_expense_listener.dart';
+import '../widgets/EditExpenseScreen/edit_expense_form.dart';
+import '../widgets/EditExpenseScreen/edit_expense_listener.dart';
 
 class EditExpenseScreen extends StatelessWidget {
   final ExpenseModel expense;

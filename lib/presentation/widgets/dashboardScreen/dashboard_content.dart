@@ -1,10 +1,10 @@
-import 'package:expense_tracker/presentation/widgets/stat_row.dart';
+import 'package:expense_tracker/presentation/widgets/dashboardScreen/stat_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/theming/colors.dart';
-import '../../data/models/category_model.dart';
-import '../../domain/helper/expense_summary.dart';
+import '../../../core/theming/colors.dart';
+import '../../../data/models/category_model.dart';
+import '../../../domain/helper/expense_summary.dart';
 import 'category_card.dart';
 
 class DashboardContent extends StatelessWidget {
@@ -67,7 +67,7 @@ class DashboardContent extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.w,
                 mainAxisSpacing: 10.h,
-                childAspectRatio: 1.2,
+                childAspectRatio: 1.3,
               ),
               itemCount: categorySummaries.length,
               itemBuilder: (context, index) {

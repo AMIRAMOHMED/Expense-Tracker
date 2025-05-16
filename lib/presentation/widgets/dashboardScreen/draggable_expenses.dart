@@ -3,8 +3,8 @@ import 'package:expense_tracker/domain/logic/expense_summary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/logic/expense_cubit.dart';
-import '../../domain/logic/expense_summary_state.dart';
+import '../../../domain/logic/expense_cubit.dart';
+import '../../../domain/logic/expense_summary_state.dart';
 import 'expense_item.dart';
 
 class DraggableExpenses extends StatelessWidget {

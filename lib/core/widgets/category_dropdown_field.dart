@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theming/colors.dart';
-import '../../core/theming/styles.dart';
+import '../theming/colors.dart';
+import '../theming/styles.dart';
 import '../../data/models/category_model.dart';
-import '../widgets/custom_text_form_field.dart';
+import 'custom_text_form_field.dart';
 
 class CategoryDropdownField extends StatefulWidget {
   final Function(int selectedId) onCategorySelected;
