@@ -8,6 +8,7 @@ import '../widgets/custom_text_form_field.dart';
 class CategoryDropdownField extends StatefulWidget {
   final Function(int selectedId) onCategorySelected;
   final List<CategoryModel> categories;
+  final int? initialValueId;
   final String? Function(CategoryModel?)? validator;
 
   const CategoryDropdownField({
@@ -15,6 +16,7 @@ class CategoryDropdownField extends StatefulWidget {
     required this.onCategorySelected,
     required this.categories,
     this.validator,
+    this.initialValueId,
   });
 
   @override
@@ -22,11 +24,31 @@ class CategoryDropdownField extends StatefulWidget {
 }
 
 class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
-  CategoryModel? _selectedCategory;
   bool _isExpanded = false;
   final TextEditingController _textController = TextEditingController();
   final GlobalKey<FormFieldState> _fieldKey = GlobalKey<FormFieldState>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _setInitialValue());
+  }
 
+  void _setInitialValue() {
+    if (widget.initialValueId != null) {
+      final initialCategory = widget.categories.firstWhere(
+            (category) => category.id == widget.initialValueId,
+        orElse: () => CategoryModel(id: -1, name: '', icon: Icons.error),
+      );
+
+      if (initialCategory.id != -1) {
+        _textController.text = initialCategory.name;
+        // Schedule the callback after the current frame
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          widget.onCategorySelected(initialCategory.id);
+        });
+      }
+    }
+  }
   void _toggleDropdown() {
     setState(() {
       _isExpanded = !_isExpanded;
@@ -35,13 +57,14 @@ class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
 
   void _selectCategory(CategoryModel category) {
     setState(() {
-      _selectedCategory = category;
       _textController.text = category.name;
       _isExpanded = false;
     });
     widget.onCategorySelected(category.id);
     _fieldKey.currentState?.validate();
   }
+
+
 
   @override
   void dispose() {
@@ -67,6 +90,8 @@ class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
                     textFieldController: _textController,
                     hintText: 'Select Category',
                     readOnly: true,
+                    errorText: fieldState.errorText,
+                    // validator: widget.validator,
                     suffixIcon: Icon(
                       _isExpanded
                           ? Icons.keyboard_arrow_up

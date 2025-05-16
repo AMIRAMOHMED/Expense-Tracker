@@ -17,18 +17,8 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<ExpenseCubit>(
-          create: (context) => getIt<ExpenseCubit>()..loadExpenses(),
-        ),
-        BlocProvider<ExpenseSummaryCubit>(
-          create:
-              (context) =>
-                  getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
-        ),
-      ],
-
+    return BlocProvider(
+      create: (context) => getIt<ExpenseSummaryCubit>()..fetchExpensePercentages(),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.whiteFF,

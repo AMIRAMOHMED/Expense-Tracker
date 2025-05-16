@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/di/service_locator.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
+import 'domain/logic/expense_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +23,13 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: AppRouter().generateRoute,
-          initialRoute: Routes.dashboardScreen,
+        return BlocProvider(
+          create: (context) => getIt<ExpenseCubit>()..loadExpenses(),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: AppRouter().generateRoute,
+            initialRoute: Routes.dashboardScreen,
+          ),
         );
       },
     );

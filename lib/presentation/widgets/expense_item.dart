@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/routing/routes.dart';
 import '../../core/theming/styles.dart';
 import '../../data/models/category_model.dart';
 import '../../data/models/expense_model.dart';
@@ -24,6 +25,7 @@ class ExpenseItem extends StatelessWidget {
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
          context.read<ExpenseCubit>().deleteExpense(expense.id!);
+         context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
       },
       confirmDismiss: (direction) async {
         return await showDialog(
@@ -79,13 +81,12 @@ class ExpenseItem extends StatelessWidget {
                 ),
                 SizedBox(width: 10.w),
                 IconButton(
-                  icon:  Icon(Icons.edit, size: 20 ,color: AppColors.primaryColor),
+                  icon: const Icon(Icons.edit, size: 20, color: AppColors.primaryColor),
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => EditExpenseScreen(expense: expense),
-                      ),
+                      Routes.editExpenseScreen,
+                      arguments: expense,
                     );
                   },
                 ),
@@ -100,20 +101,6 @@ class ExpenseItem extends StatelessWidget {
   CategoryModel _getCategoryForExpense() {
     return CategoryModel.categories.firstWhere(
           (category) => category.id == expense.categoryId,
-    );
-  }
-}
-
-// Placeholder for edit screen - replace with your implementation
-class EditExpenseScreen extends StatelessWidget {
-  final ExpenseModel expense;
-  const EditExpenseScreen({super.key, required this.expense});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Edit Expense')),
-      body: const Center(child: Text('Implement your edit UI here')),
     );
   }
 }
