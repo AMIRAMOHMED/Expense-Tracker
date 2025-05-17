@@ -46,7 +46,6 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                   if (value == null || value.isEmpty) {
                     return " Please Enter Your Expense Name ";
                   }
-                  return null;
                 },
                 hintText: "Expense Name",
               ),
@@ -60,7 +59,6 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                   if (value == null || value.isEmpty) {
                     return "Please Enter Your Expense Amount";
                   }
-                  return null;
                 },
               ),
               SizedBox(height: 20.h),
@@ -68,10 +66,9 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
               CategoryDropdownField(
                 categories: CategoryModel.categories,
                 validator: (value) {
-                  if (value == null) {
+                  if (categoryId == null) {
                     return "Please Select Category";
                   }
-                  return null;
                 },
                 onCategorySelected: (id) {
                   setState(() {

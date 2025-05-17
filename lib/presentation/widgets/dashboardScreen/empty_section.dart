@@ -16,12 +16,14 @@ class EmptySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "No Expenses yet , hurry up and add one",
+            textAlign: TextAlign.center,
+            "No Expenses yet,\nhurry up and add one",
             style: TextStyles.title.copyWith(color: AppColors.primaryColor),
           ),
           const SizedBox(height: 10),
