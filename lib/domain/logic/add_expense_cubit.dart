@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/expense_model.dart';
@@ -11,9 +13,8 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   Future<void> addExpense(ExpenseModel expense) async {
     emit(state.copyWith(isLoading: true, isSuccess: false, errorMessage: null));
-
     try {
-      await repository.addExpense(expense);
+   await repository.addExpense(expense);
       emit(state.copyWith(isLoading: false, isSuccess: true));
     } catch (e) {
       emit(

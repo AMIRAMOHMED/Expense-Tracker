@@ -4,7 +4,6 @@ import '../sources/expense_local_data_source.dart';
 
 class ExpenseRepositoryImpl implements ExpenseRepository {
   final ExpenseLocalDataSource localDataSource;
-
   ExpenseRepositoryImpl(this.localDataSource);
 
   @override

@@ -22,8 +22,10 @@ class AddExpenseButton extends StatelessWidget {
             Routes.addExpenseScreen,
           );
           if (result == true) {
-            context.read<ExpenseCubit>().loadExpenses();
-            context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
+            if(context.mounted) {
+              context.read<ExpenseCubit>().loadExpenses();
+              context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
+            }
           }
         },
         child: Row(
