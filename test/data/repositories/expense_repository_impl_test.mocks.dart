@@ -87,4 +87,62 @@ class MockExpenseLocalDataSource extends _i1.Mock
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
           as _i4.Future<void>);
+
+  @override
+  _i4.Future<List<_i2.ExpenseModel>> getExpensesForMonth(
+    int? year,
+    int? month,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getExpensesForMonth, [year, month]),
+            returnValue: _i4.Future<List<_i2.ExpenseModel>>.value(
+              <_i2.ExpenseModel>[],
+            ),
+          )
+          as _i4.Future<List<_i2.ExpenseModel>>);
+
+  @override
+  _i4.Future<Map<int, double>> getCategoryMonthlyTotals(
+    int? year,
+    int? month,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getCategoryMonthlyTotals, [year, month]),
+            returnValue: _i4.Future<Map<int, double>>.value(<int, double>{}),
+          )
+          as _i4.Future<Map<int, double>>);
+
+  @override
+  _i4.Future<double> getMonthlyTotal(int? year, int? month) =>
+      (super.noSuchMethod(
+            Invocation.method(#getMonthlyTotal, [year, month]),
+            returnValue: _i4.Future<double>.value(0.0),
+          )
+          as _i4.Future<double>);
+
+  @override
+  _i4.Future<List<_i2.ExpenseModel>> searchExpenses({
+    String? query,
+    int? categoryId,
+    DateTime? date,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#searchExpenses, [], {
+              #query: query,
+              #categoryId: categoryId,
+              #date: date,
+            }),
+            returnValue: _i4.Future<List<_i2.ExpenseModel>>.value(
+              <_i2.ExpenseModel>[],
+            ),
+          )
+          as _i4.Future<List<_i2.ExpenseModel>>);
+
+  @override
+  _i4.Future<double> getYearlyTotal(int? year) =>
+      (super.noSuchMethod(
+            Invocation.method(#getYearlyTotal, [year]),
+            returnValue: _i4.Future<double>.value(0.0),
+          )
+          as _i4.Future<double>);
 }

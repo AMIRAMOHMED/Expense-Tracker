@@ -1,18 +1,38 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:expense_tracker/data/models/expense_model.dart';
-import 'package:expense_tracker/domain/repositories/expense_repository.dart';
+import 'package:expense_tracker/domain/usecases/delete_expense_use_case.dart';
+import 'package:expense_tracker/domain/usecases/get_category_monthly_totals_use_case.dart';
+import 'package:expense_tracker/domain/usecases/get_expenses_for_month_use_case.dart';
+import 'package:expense_tracker/domain/usecases/get_monthly_total_use_case.dart';
+import 'package:expense_tracker/domain/usecases/get_yearly_total_use_case.dart';
+import 'package:expense_tracker/domain/usecases/update_expense_use_case.dart';
 import 'package:expense_tracker/presentation/logic/expense_cubit.dart';
+import 'package:expense_tracker/presentation/logic/expense_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-@GenerateMocks([ExpenseRepository])
+@GenerateMocks([
+  DeleteExpenseUseCase,
+  UpdateExpenseUseCase,
+  GetExpensesForMonthUseCase,
+  GetCategoryMonthlyTotalsUseCase,
+  GetMonthlyTotalUseCase,
+  GetYearlyTotalUseCase,
+])
 import 'expense_cubit_test.mocks.dart';
 
 void main() {
   late ExpenseCubit expenseCubit;
-  late MockExpenseRepository mockExpenseRepository;
+  late MockDeleteExpenseUseCase mockDeleteExpenseUseCase;
+  late MockUpdateExpenseUseCase mockUpdateExpenseUseCase;
+  late MockGetExpensesForMonthUseCase mockGetExpensesForMonthUseCase;
+  late MockGetCategoryMonthlyTotalsUseCase mockGetCategoryMonthlyTotalsUseCase;
+  late MockGetMonthlyTotalUseCase mockGetMonthlyTotalUseCase;
+  late MockGetYearlyTotalUseCase mockGetYearlyTotalUseCase;
 
+  const year = 2023;
+  const month = 5;
   final expense1 = ExpenseModel(
     id: 1,
     name: 'Food',
@@ -27,126 +47,139 @@ void main() {
     date: '2023-05-16',
     categoryId: 2,
   );
+  final categoryTotals = {3: 50.0};
+  const monthlyTotal = 100.0;
+  const yearlyTotal = 500.0;
 
   setUp(() {
-    mockExpenseRepository = MockExpenseRepository();
-    expenseCubit = ExpenseCubit(mockExpenseRepository);
-  });
+    mockDeleteExpenseUseCase = MockDeleteExpenseUseCase();
+    mockUpdateExpenseUseCase = MockUpdateExpenseUseCase();
+    mockGetExpensesForMonthUseCase = MockGetExpensesForMonthUseCase();
+    mockGetCategoryMonthlyTotalsUseCase = MockGetCategoryMonthlyTotalsUseCase();
+    mockGetMonthlyTotalUseCase = MockGetMonthlyTotalUseCase();
+    mockGetYearlyTotalUseCase = MockGetYearlyTotalUseCase();
 
-  tearDown(() {
-    expenseCubit.close();
+    expenseCubit = ExpenseCubit(
+      deleteExpenseUseCase: mockDeleteExpenseUseCase,
+      updateExpenseUseCase: mockUpdateExpenseUseCase,
+      getExpensesForMonthUseCase: mockGetExpensesForMonthUseCase,
+      getCategoryMonthlyTotalsUseCase: mockGetCategoryMonthlyTotalsUseCase,
+      getMonthlyTotalUseCase: mockGetMonthlyTotalUseCase,
+      getYearlyTotalUseCase: mockGetYearlyTotalUseCase,
+    );
   });
 
   group("loadExpenses", () {
-    // Test loading expenses successfully
-
     blocTest<ExpenseCubit, ExpenseState>(
-      "should load expenses successfully",
+      "emits [loading, loaded] when successful",
       build: () => expenseCubit,
       setUp: () {
         when(
-          mockExpenseRepository.getExpenses(),
+          mockGetExpensesForMonthUseCase(year, month),
         ).thenAnswer((_) async => [expense1, expense2]);
+        when(
+          mockGetCategoryMonthlyTotalsUseCase(year, month),
+        ).thenAnswer((_) async => categoryTotals);
+        when(
+          mockGetMonthlyTotalUseCase(year, month),
+        ).thenAnswer((_) async => monthlyTotal);
+        when(
+          mockGetYearlyTotalUseCase(year),
+        ).thenAnswer((_) async => yearlyTotal);
       },
-      act: (expenseCubit) => expenseCubit.loadExpenses(),
+      act: (cubit) => cubit.loadExpenses(year, month),
       expect:
           () => [
-            ExpenseState(expenses: [], isLoading: true),
-            ExpenseState(expenses: [expense1, expense2], isLoading: false),
+            const ExpenseState(status: ExpenseStatus.loading),
+            ExpenseState(
+              status: ExpenseStatus.loaded,
+              expenses: [expense1, expense2],
+              categoryTotals: categoryTotals,
+              monthlyTotal: monthlyTotal,
+              yearlyTotal: yearlyTotal,
+              currentYear: year,
+              currentMonth: month,
+            ),
           ],
-      verify: (expenseCubit) {
-        verify(mockExpenseRepository.getExpenses()).called(1);
+      verify: (_) {
+        verify(mockGetExpensesForMonthUseCase(year, month)).called(1);
+        verify(mockGetCategoryMonthlyTotalsUseCase(year, month)).called(1);
+        verify(mockGetMonthlyTotalUseCase(year, month)).called(1);
+        verify(mockGetYearlyTotalUseCase(year)).called(1);
       },
     );
-    // Test loading expenses fails
 
     blocTest<ExpenseCubit, ExpenseState>(
-      'emits [loading, error] when loadExpenses fails',
+      "emits [loading, error] when fails",
       build: () => expenseCubit,
       setUp: () {
         when(
-          mockExpenseRepository.getExpenses(),
-        ).thenThrow(Exception('Network error'));
+          mockGetExpensesForMonthUseCase(year, month),
+        ).thenThrow(Exception("Network error"));
       },
-      act: (cubit) => cubit.loadExpenses(),
+      act: (cubit) => cubit.loadExpenses(year, month),
       expect:
           () => [
-            const ExpenseState(isLoading: true),
-            const ExpenseState(
-              isLoading: false,
-              errorMessage: 'Exception: Network error',
+            const ExpenseState(status: ExpenseStatus.loading),
+            ExpenseState(
+              status: ExpenseStatus.error,
+              errorMessage: "Exception: Network error",
             ),
           ],
     );
   });
-
-  group("addExpense", () {
-    // Test adding an expense
-
-    blocTest<ExpenseCubit, ExpenseState>(
-      'emits [loading, loaded] when addExpense succeeds',
-      build: () => expenseCubit,
-      setUp: () {
-        when(mockExpenseRepository.addExpense(any)).thenAnswer((_) async {});
-        when(
-          mockExpenseRepository.getExpenses(),
-        ).thenAnswer((_) async => [expense1]);
-      },
-      act: (cubit) => cubit.addExpense(expense1),
-      expect:
-          () => [
-            const ExpenseState(isLoading: true),
-            ExpenseState(expenses: [expense1], isLoading: false),
-          ],
-      verify: (_) {
-        verify(mockExpenseRepository.addExpense(expense1)).called(1);
-        verify(mockExpenseRepository.getExpenses()).called(1);
-      },
-    );
-  });
   group("deleteExpense", () {
-    // Test deleting an expense with a valid ID
     blocTest<ExpenseCubit, ExpenseState>(
-      'emits [loading, loaded] when deleteExpense succeeds',
+      "emits [loading, loaded] when successful",
       build: () => expenseCubit,
       setUp: () {
+        // Mock initial load data
         when(
-          mockExpenseRepository.deleteExpense(any),
-        ).thenAnswer((_) async => 1);
-        when(mockExpenseRepository.getExpenses()).thenAnswer((_) async => []);
+          mockGetExpensesForMonthUseCase(year, month),
+        ).thenAnswer((_) async => [expense1]);
+        when(
+          mockGetCategoryMonthlyTotalsUseCase(year, month),
+        ).thenAnswer((_) async => categoryTotals);
+        when(
+          mockGetMonthlyTotalUseCase(year, month),
+        ).thenAnswer((_) async => monthlyTotal);
+        when(
+          mockGetYearlyTotalUseCase(year),
+        ).thenAnswer((_) async => yearlyTotal);
+        when(mockDeleteExpenseUseCase(1)).thenAnswer((_) async {});
       },
-      act: (cubit) => cubit.deleteExpense(1),
+      act: (cubit) async {
+        await cubit.loadExpenses(year, month);
+        when(
+          mockGetExpensesForMonthUseCase(year, month),
+        ).thenAnswer((_) async => []);
+        await cubit.deleteExpense(1);
+      },
+      skip: 2,
       expect:
           () => [
-            const ExpenseState(isLoading: true),
-            ExpenseState(expenses: [], isLoading: false),
+            ExpenseState(
+              status: ExpenseStatus.loading,
+              expenses: [expense1],
+              categoryTotals: categoryTotals,
+              monthlyTotal: monthlyTotal,
+              yearlyTotal: yearlyTotal,
+              currentYear: year,
+              currentMonth: month,
+            ),
+            ExpenseState(
+              status: ExpenseStatus.loaded,
+              expenses: [],
+              categoryTotals: categoryTotals,
+              monthlyTotal: monthlyTotal,
+              yearlyTotal: yearlyTotal,
+              currentYear: year,
+              currentMonth: month,
+            ),
           ],
       verify: (_) {
-        verify(mockExpenseRepository.deleteExpense(1)).called(1);
-        verify(mockExpenseRepository.getExpenses()).called(1);
-      },
-    );
-    blocTest<ExpenseCubit, ExpenseState>(
-      // Test deleting an expense with an invalid ID
-      'emits [loading, error] when deleteExpense succeeds',
-      build: () => expenseCubit,
-      setUp: () {
-        when(
-          mockExpenseRepository.deleteExpense(99),
-        ).thenAnswer((_) async => 0);
-        when(
-          mockExpenseRepository.getExpenses(),
-        ).thenAnswer((_) async => [expense2, expense1]);
-      },
-      act: (cubit) => cubit.deleteExpense(99),
-      expect:
-          () => [
-            const ExpenseState(isLoading: true),
-            ExpenseState(expenses: [expense2, expense1], isLoading: false),
-          ],
-      verify: (_) {
-        verify(mockExpenseRepository.deleteExpense(99)).called(1);
-        verify(mockExpenseRepository.getExpenses()).called(1);
+        verify(mockDeleteExpenseUseCase(1)).called(1);
+        verify(mockGetExpensesForMonthUseCase(year, month)).called(2);
       },
     );
   });

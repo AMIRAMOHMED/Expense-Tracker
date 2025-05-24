@@ -5,9 +5,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:expense_tracker/data/models/expense_model.dart' as _i2;
+import 'package:expense_tracker/data/models/expense_model.dart' as _i6;
 import 'package:expense_tracker/domain/repositories/expense_repository.dart'
+    as _i2;
+import 'package:expense_tracker/domain/usecases/delete_expense_use_case.dart'
     as _i3;
+import 'package:expense_tracker/domain/usecases/get_category_monthly_totals_use_case.dart'
+    as _i8;
+import 'package:expense_tracker/domain/usecases/get_expenses_for_month_use_case.dart'
+    as _i7;
+import 'package:expense_tracker/domain/usecases/get_monthly_total_use_case.dart'
+    as _i9;
+import 'package:expense_tracker/domain/usecases/get_yearly_total_use_case.dart'
+    as _i10;
+import 'package:expense_tracker/domain/usecases/update_expense_use_case.dart'
+    as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -24,74 +36,186 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeExpenseModel_0 extends _i1.SmartFake implements _i2.ExpenseModel {
-  _FakeExpenseModel_0(Object parent, Invocation parentInvocation)
+class _FakeExpenseRepository_0 extends _i1.SmartFake
+    implements _i2.ExpenseRepository {
+  _FakeExpenseRepository_0(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-/// A class which mocks [ExpenseRepository].
+/// A class which mocks [DeleteExpenseUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockExpenseRepository extends _i1.Mock implements _i3.ExpenseRepository {
-  MockExpenseRepository() {
+class MockDeleteExpenseUseCase extends _i1.Mock
+    implements _i3.DeleteExpenseUseCase {
+  MockDeleteExpenseUseCase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<List<_i2.ExpenseModel>> getExpenses({
-    String? searchQuery,
-    DateTime? startDate,
-    DateTime? endDate,
-  }) =>
+  _i2.ExpenseRepository get repository =>
       (super.noSuchMethod(
-            Invocation.method(#getExpenses, [], {
-              #searchQuery: searchQuery,
-              #startDate: startDate,
-              #endDate: endDate,
-            }),
-            returnValue: _i4.Future<List<_i2.ExpenseModel>>.value(
-              <_i2.ExpenseModel>[],
+            Invocation.getter(#repository),
+            returnValue: _FakeExpenseRepository_0(
+              this,
+              Invocation.getter(#repository),
             ),
           )
-          as _i4.Future<List<_i2.ExpenseModel>>);
+          as _i2.ExpenseRepository);
 
   @override
-  _i4.Future<_i2.ExpenseModel> getExpenseById(int? id) =>
+  _i4.Future<void> call(int? id) =>
       (super.noSuchMethod(
-            Invocation.method(#getExpenseById, [id]),
-            returnValue: _i4.Future<_i2.ExpenseModel>.value(
-              _FakeExpenseModel_0(
-                this,
-                Invocation.method(#getExpenseById, [id]),
-              ),
+            Invocation.method(#call, [id]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
+}
+
+/// A class which mocks [UpdateExpenseUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUpdateExpenseUseCase extends _i1.Mock
+    implements _i5.UpdateExpenseUseCase {
+  MockUpdateExpenseUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ExpenseRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeExpenseRepository_0(
+              this,
+              Invocation.getter(#repository),
             ),
           )
-          as _i4.Future<_i2.ExpenseModel>);
+          as _i2.ExpenseRepository);
 
   @override
-  _i4.Future<void> addExpense(_i2.ExpenseModel? expense) =>
+  _i4.Future<void> call(_i6.ExpenseModel? expense) =>
       (super.noSuchMethod(
-            Invocation.method(#addExpense, [expense]),
+            Invocation.method(#call, [expense]),
             returnValue: _i4.Future<void>.value(),
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
           as _i4.Future<void>);
+}
+
+/// A class which mocks [GetExpensesForMonthUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetExpensesForMonthUseCase extends _i1.Mock
+    implements _i7.GetExpensesForMonthUseCase {
+  MockGetExpensesForMonthUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
 
   @override
-  _i4.Future<void> updateExpense(_i2.ExpenseModel? expense) =>
+  _i2.ExpenseRepository get repository =>
       (super.noSuchMethod(
-            Invocation.method(#updateExpense, [expense]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            Invocation.getter(#repository),
+            returnValue: _FakeExpenseRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
           )
-          as _i4.Future<void>);
+          as _i2.ExpenseRepository);
 
   @override
-  _i4.Future<void> deleteExpense(int? id) =>
+  _i4.Future<List<_i6.ExpenseModel>> call(int? year, int? month) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteExpense, [id]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            Invocation.method(#call, [year, month]),
+            returnValue: _i4.Future<List<_i6.ExpenseModel>>.value(
+              <_i6.ExpenseModel>[],
+            ),
           )
-          as _i4.Future<void>);
+          as _i4.Future<List<_i6.ExpenseModel>>);
+}
+
+/// A class which mocks [GetCategoryMonthlyTotalsUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetCategoryMonthlyTotalsUseCase extends _i1.Mock
+    implements _i8.GetCategoryMonthlyTotalsUseCase {
+  MockGetCategoryMonthlyTotalsUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ExpenseRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeExpenseRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
+          )
+          as _i2.ExpenseRepository);
+
+  @override
+  _i4.Future<Map<int, double>> call(int? year, int? month) =>
+      (super.noSuchMethod(
+            Invocation.method(#call, [year, month]),
+            returnValue: _i4.Future<Map<int, double>>.value(<int, double>{}),
+          )
+          as _i4.Future<Map<int, double>>);
+}
+
+/// A class which mocks [GetMonthlyTotalUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetMonthlyTotalUseCase extends _i1.Mock
+    implements _i9.GetMonthlyTotalUseCase {
+  MockGetMonthlyTotalUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ExpenseRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeExpenseRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
+          )
+          as _i2.ExpenseRepository);
+
+  @override
+  _i4.Future<double> call(int? year, int? month) =>
+      (super.noSuchMethod(
+            Invocation.method(#call, [year, month]),
+            returnValue: _i4.Future<double>.value(0.0),
+          )
+          as _i4.Future<double>);
+}
+
+/// A class which mocks [GetYearlyTotalUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetYearlyTotalUseCase extends _i1.Mock
+    implements _i10.GetYearlyTotalUseCase {
+  MockGetYearlyTotalUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ExpenseRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeExpenseRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
+          )
+          as _i2.ExpenseRepository);
+
+  @override
+  _i4.Future<double> call(int? year) =>
+      (super.noSuchMethod(
+            Invocation.method(#call, [year]),
+            returnValue: _i4.Future<double>.value(0.0),
+          )
+          as _i4.Future<double>);
 }

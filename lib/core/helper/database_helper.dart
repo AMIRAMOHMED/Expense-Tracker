@@ -1,5 +1,6 @@
 import '''
-package:path/path.dart''' show join;
+package:path/path.dart'''
+    show join;
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
