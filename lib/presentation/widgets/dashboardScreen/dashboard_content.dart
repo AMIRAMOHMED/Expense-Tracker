@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/theming/colors.dart';
 import '../../../core/theming/styles.dart';
 import '../../../data/models/category_model.dart';
-import '../../../domain/helper/expense_summary.dart';
+import '../../logic/expense_cubit.dart';
 import 'category_card.dart';
 import 'stat_row.dart';
 
 class DashboardContent extends StatelessWidget {
-  final ExpenseSummary summary;
-
-  const DashboardContent({super.key, required this.summary});
+  const DashboardContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final yearlyTotal = context.read<ExpenseCubit>().state.yearlyTotal;
+    final monthlyTotal = context.read<ExpenseCubit>().state.monthlyTotal;
+    final categoryTotals = context.read<ExpenseCubit>().state.categoryTotals;
     final now = DateTime.now();
     final categorySummaries =
         CategoryModel.categories
             .map(
               (category) => {
                 'category': category,
-                'total': summary.categoryTotals[category.id] ?? 0.0,
+                'total': categoryTotals[category.id] ?? 0.0,
               },
             )
             .toList();
@@ -54,13 +56,13 @@ class DashboardContent extends StatelessWidget {
                 StatRow(
                   icon: Icons.calendar_month,
                   label: DateFormat('MMMM y').format(now),
-                  amount: summary.monthlySpending,
+                  amount: monthlyTotal,
                 ),
                 SizedBox(height: 12.h),
                 StatRow(
                   icon: Icons.calendar_today,
-                  label:" Yearly ${DateFormat('y').format(now)}",
-                  amount: summary.yearlySpending,
+                  label: " Yearly ${DateFormat('y').format(now)}",
+                  amount: yearlyTotal,
                 ),
               ],
             ),

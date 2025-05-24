@@ -1,7 +1,8 @@
-import 'package:expense_tracker/domain/logic/add_expense_cubit.dart';
-import 'package:expense_tracker/domain/logic/add_expense_state.dart'; // Make sure to import the correct state
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../logic/add_expense_cubit.dart';
+import '../../logic/add_expense_state.dart';
 
 class AddExpensesListener extends StatelessWidget {
   const AddExpensesListener({super.key, required this.child});

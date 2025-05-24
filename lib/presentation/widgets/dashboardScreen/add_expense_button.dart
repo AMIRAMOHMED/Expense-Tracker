@@ -1,11 +1,10 @@
-import 'package:expense_tracker/domain/logic/expense_summary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/routing/routes.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/theming/styles.dart';
-import '../../../domain/logic/expense_cubit.dart';
+import '../../logic/expense_cubit.dart';
 
 class AddExpenseButton extends StatelessWidget {
   const AddExpenseButton({super.key});
@@ -22,9 +21,11 @@ class AddExpenseButton extends StatelessWidget {
             Routes.addExpenseScreen,
           );
           if (result == true) {
-            if(context.mounted) {
-              context.read<ExpenseCubit>().loadExpenses();
-              context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
+            if (context.mounted) {
+              context.read<ExpenseCubit>().loadExpenses(
+                DateTime.now().year,
+                DateTime.now().month,
+              );
             }
           }
         },

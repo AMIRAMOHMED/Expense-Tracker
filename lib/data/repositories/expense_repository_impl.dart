@@ -4,24 +4,13 @@ import '../sources/expense_local_data_source.dart';
 
 class ExpenseRepositoryImpl implements ExpenseRepository {
   final ExpenseLocalDataSource localDataSource;
+
   ExpenseRepositoryImpl(this.localDataSource);
 
   @override
-  Future<List<ExpenseModel>> getExpenses({
-    String? searchQuery,
-    DateTime? startDate,
-    DateTime? endDate,
-  }) async {
+  Future<List<ExpenseModel>> getExpenses() async {
     final expenses = await localDataSource.getExpenses();
-    return expenses.where((expense) {
-      bool matchesSearch =
-          searchQuery == null || expense.name.contains(searchQuery);
-      DateTime expenseDate = DateTime.parse(expense.date);
-      bool matchesDate =
-          (startDate == null || expenseDate.compareTo(startDate) >= 0) &&
-          (endDate == null || expenseDate.compareTo(endDate) <= 0);
-      return matchesSearch && matchesDate;
-    }).toList();
+    return expenses;
   }
 
   @override
@@ -42,5 +31,38 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
   @override
   Future<void> deleteExpense(int id) async {
     await localDataSource.deleteExpense(id);
+  }
+
+  @override
+  Future<Map<int, double>> getCategoryMonthlyTotals(int year, int month) async {
+    return await localDataSource.getCategoryMonthlyTotals(year, month);
+  }
+
+  @override
+  Future<List<ExpenseModel>> getExpensesForMonth(int year, int month) async {
+    return await localDataSource.getExpensesForMonth(year, month);
+  }
+
+  @override
+  Future<double> getMonthlyTotal(int year, int month) async {
+    return await localDataSource.getMonthlyTotal(year, month);
+  }
+
+  @override
+  Future<List<ExpenseModel>> searchExpenses({
+    String? query,
+    int? categoryId,
+    DateTime? date,
+  }) async {
+    return await localDataSource.searchExpenses(
+      query: query,
+      categoryId: categoryId,
+      date: date,
+    );
+  }
+
+  @override
+  Future<double> getYearlyTotal(int year) async {
+    return await localDataSource.getYearlyTotal(year);
   }
 }

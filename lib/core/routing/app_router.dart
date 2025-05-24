@@ -4,7 +4,7 @@ import 'package:expense_tracker/presentation/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/logic/add_expense_cubit.dart';
+import '../../presentation/logic/add_expense_cubit.dart';
 import '../../presentation/screens/add_expense_screen.dart';
 import '../../presentation/screens/edit_expense_screen.dart';
 import '../di/service_locator.dart';

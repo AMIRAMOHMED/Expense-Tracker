@@ -10,16 +10,14 @@ class DashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             DateFormat('MMMM d, y').format(DateTime.now()),
-            style: TextStyles.title.copyWith(
-              color: AppColors.primaryColor,
-            ),
+            style: TextStyles.title.copyWith(color: AppColors.primaryColor),
           ),
         ),
         const AddExpenseButton(),

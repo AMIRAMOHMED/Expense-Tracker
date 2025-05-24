@@ -5,8 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/theming/colors.dart';
 import '../../../data/models/expense_model.dart';
-import '../../../domain/logic/expense_cubit.dart';
-import '../../../domain/logic/expense_summary_cubit.dart';
+import '../../logic/expense_cubit.dart';
 
 class DismissibleWrapper extends StatelessWidget {
   final ExpenseModel expense;
@@ -21,7 +20,6 @@ class DismissibleWrapper extends StatelessWidget {
         direction: DismissDirection.endToStart,
         onDismissed: (direction) => {
         context.read<ExpenseCubit>().deleteExpense(expense.id!),
-        context.read<ExpenseSummaryCubit>().fetchExpensePercentages(),
   },
     confirmDismiss: (direction) => _confirmDismiss(context),
     background: Container(

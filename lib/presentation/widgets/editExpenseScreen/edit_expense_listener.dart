@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/logic/expense_cubit.dart';
-import '../../../domain/logic/expense_state.dart';
+import '../../logic/expense_cubit.dart';
+import '../../logic/expense_state.dart';
 
 class EditExpenseListener extends StatelessWidget {
   final Widget child;
@@ -13,7 +13,8 @@ class EditExpenseListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ExpenseCubit, ExpenseState>(
       listener: (context, state) {
-        if (!state.isLoading && state.errorMessage == null) {
+        if (state.status != ExpenseStatus.loading &&
+            state.errorMessage == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Expense updated successfully')),
           );

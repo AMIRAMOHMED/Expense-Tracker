@@ -7,9 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/theming/styles.dart';
-import '../../../domain/logic/expense_cubit.dart';
-import '../../../domain/logic/expense_summary_cubit.dart';
 import '../../../core/widgets/custom_button.dart';
+import '../../logic/expense_cubit.dart';
 
 class EmptySection extends StatelessWidget {
   const EmptySection({super.key});
@@ -37,8 +36,12 @@ class EmptySection extends StatelessWidget {
                 Routes.addExpenseScreen,
               );
               if (result == true) {
-                context.read<ExpenseCubit>().loadExpenses();
-                context.read<ExpenseSummaryCubit>().fetchExpensePercentages();
+                if (context.mounted) {
+                  context.read<ExpenseCubit>().loadExpenses(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                  );
+                }
               }
             },
           ),
