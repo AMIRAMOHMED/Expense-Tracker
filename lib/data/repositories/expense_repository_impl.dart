@@ -9,43 +9,74 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
 
   @override
   Future<List<ExpenseModel>> getExpenses() async {
-    final expenses = await localDataSource.getExpenses();
-    return expenses;
+    try {
+      return await localDataSource.getExpenses();
+    } catch (e) {
+      throw Exception('Failed to fetch expenses: $e');
+    }
   }
 
   @override
   Future<ExpenseModel> getExpenseById(int id) async {
-    return await localDataSource.getExpenseById(id);
+    try {
+      return await localDataSource.getExpenseById(id);
+    } catch (e) {
+      throw Exception('Failed to fetch expense by ID $id: $e');
+    }
   }
 
   @override
   Future<void> addExpense(ExpenseModel expense) async {
-    await localDataSource.addExpense(expense);
+    try {
+      await localDataSource.addExpense(expense);
+    } catch (e) {
+      throw Exception('Failed to add expense: $e');
+    }
   }
 
   @override
   Future<void> updateExpense(ExpenseModel expense) async {
-    await localDataSource.updateExpense(expense);
+    try {
+      await localDataSource.updateExpense(expense);
+    } catch (e) {
+      throw Exception('Failed to update expense: $e');
+    }
   }
 
   @override
   Future<void> deleteExpense(int id) async {
-    await localDataSource.deleteExpense(id);
+    try {
+      await localDataSource.deleteExpense(id);
+    } catch (e) {
+      throw Exception('Failed to delete expense ID $id: $e');
+    }
   }
 
   @override
   Future<Map<int, double>> getCategoryMonthlyTotals(int year, int month) async {
-    return await localDataSource.getCategoryMonthlyTotals(year, month);
+    try {
+      return await localDataSource.getCategoryMonthlyTotals(year, month);
+    } catch (e) {
+      throw Exception('Failed to get category totals for $month/$year: $e');
+    }
   }
 
   @override
   Future<List<ExpenseModel>> getExpensesForMonth(int year, int month) async {
-    return await localDataSource.getExpensesForMonth(year, month);
+    try {
+      return await localDataSource.getExpensesForMonth(year, month);
+    } catch (e) {
+      throw Exception('Failed to get monthly expenses for $month/$year: $e');
+    }
   }
 
   @override
   Future<double> getMonthlyTotal(int year, int month) async {
-    return await localDataSource.getMonthlyTotal(year, month);
+    try {
+      return await localDataSource.getMonthlyTotal(year, month);
+    } catch (e) {
+      throw Exception('Failed to get monthly total for $month/$year: $e');
+    }
   }
 
   @override
@@ -54,15 +85,23 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
     int? categoryId,
     DateTime? date,
   }) async {
-    return await localDataSource.searchExpenses(
-      query: query,
-      categoryId: categoryId,
-      date: date,
-    );
+    try {
+      return await localDataSource.searchExpenses(
+        query: query,
+        categoryId: categoryId,
+        date: date,
+      );
+    } catch (e) {
+      throw Exception('Failed to search expenses: $e');
+    }
   }
 
   @override
   Future<double> getYearlyTotal(int year) async {
-    return await localDataSource.getYearlyTotal(year);
+    try {
+      return await localDataSource.getYearlyTotal(year);
+    } catch (e) {
+      throw Exception('Failed to get yearly total for $year: $e');
+    }
   }
 }
