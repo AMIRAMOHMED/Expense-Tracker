@@ -5,11 +5,7 @@ class CategoryModel {
   final String name;
   final IconData icon;
 
-  CategoryModel({
-    required this.id,
-    required this.name,
-    required this.icon,
-  });
+  CategoryModel({required this.id, required this.name, required this.icon});
 
   static List<CategoryModel> categories = [
     CategoryModel(id: 1, name: 'Food', icon: Icons.fastfood),

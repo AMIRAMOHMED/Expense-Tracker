@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/category_model.dart';
 import '../theming/colors.dart';
 import '../theming/styles.dart';
-import '../../data/models/category_model.dart';
 import 'custom_text_form_field.dart';
 
 class CategoryDropdownField extends StatefulWidget {
@@ -27,6 +27,7 @@ class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
   bool _isExpanded = false;
   final TextEditingController _textController = TextEditingController();
   final GlobalKey<FormFieldState> _fieldKey = GlobalKey<FormFieldState>();
+
   @override
   void initState() {
     super.initState();
@@ -36,7 +37,7 @@ class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
   void _setInitialValue() {
     if (widget.initialValueId != null) {
       final initialCategory = widget.categories.firstWhere(
-            (category) => category.id == widget.initialValueId,
+        (category) => category.id == widget.initialValueId,
         orElse: () => CategoryModel(id: -1, name: '', icon: Icons.error),
       );
 
@@ -49,6 +50,7 @@ class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
       }
     }
   }
+
   void _toggleDropdown() {
     setState(() {
       _isExpanded = !_isExpanded;
@@ -63,8 +65,6 @@ class _CategoryDropdownFieldState extends State<CategoryDropdownField> {
     widget.onCategorySelected(category.id);
     _fieldKey.currentState?.validate();
   }
-
-
 
   @override
   void dispose() {

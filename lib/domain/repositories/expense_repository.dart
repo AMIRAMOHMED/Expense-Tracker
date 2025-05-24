@@ -22,6 +22,6 @@ abstract class ExpenseRepository {
     int? categoryId,
     DateTime? date,
   });
-  Future<double> getYearlyTotal(int year);
 
+  Future<double> getYearlyTotal(int year);
 }

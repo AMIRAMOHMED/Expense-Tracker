@@ -38,7 +38,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       child: TextFormField(
         style: TextStyles.small,
         enabled: true,
-        validator: widget.validator != null ? (value) => widget.validator!(value) : null,
+        validator:
+            widget.validator != null
+                ? (value) => widget.validator!(value)
+                : null,
         keyboardType: widget.keyboardType,
         controller: widget.textFieldController,
         onChanged: widget.onChanged,
@@ -56,19 +59,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
+              color:
+                  widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
+              color:
+                  widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
             ),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: widget.errorText == null ? AppColors. greyB2 : AppColors.redEB,
+              color:
+                  widget.errorText == null ? AppColors.greyB2 : AppColors.redEB,
             ),
           ),
         ),

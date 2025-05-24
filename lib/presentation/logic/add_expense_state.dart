@@ -24,9 +24,5 @@ class AddExpenseState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    isLoading,
-    isSuccess,
-    errorMessage,
-  ];
+  List<Object?> get props => [isLoading, isSuccess, errorMessage];
 }

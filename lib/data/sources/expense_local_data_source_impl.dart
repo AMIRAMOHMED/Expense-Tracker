@@ -139,11 +139,11 @@ class ExpenseLocalDataSourceImpl implements ExpenseLocalDataSource {
   }
 
   @override
-  Future<double> getYearlyTotal(int year)  async{
+  Future<double> getYearlyTotal(int year) async {
     final db = await databaseHelper.database;
     final result = await db.rawQuery(
-        'SELECT SUM(amount) as total FROM expenses WHERE strftime("%Y", date) = ?',
-        [year.toString()]
+      'SELECT SUM(amount) as total FROM expenses WHERE strftime("%Y", date) = ?',
+      [year.toString()],
     );
     return result.first['total'] as double? ?? 0.0;
   }

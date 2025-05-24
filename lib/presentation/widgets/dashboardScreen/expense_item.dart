@@ -9,14 +9,11 @@ class ExpenseItem extends StatelessWidget {
 
   final ExpenseModel expense;
 
-
   @override
   Widget build(BuildContext context) {
     return DismissibleWrapper(
       expense: expense,
-      child: ExpenseContent(
-        expense: expense,
-      ),
+      child: ExpenseContent(expense: expense),
     );
   }
 }

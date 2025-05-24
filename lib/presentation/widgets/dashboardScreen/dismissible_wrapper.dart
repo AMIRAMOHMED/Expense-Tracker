@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,25 +10,29 @@ class DismissibleWrapper extends StatelessWidget {
   final ExpenseModel expense;
   final Widget child;
 
-  const DismissibleWrapper({required this.expense, required this.child});
+  const DismissibleWrapper({
+    super.key,
+    required this.expense,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-        key: Key(expense.id.toString()),
-        direction: DismissDirection.endToStart,
-        onDismissed: (direction) => {
-        context.read<ExpenseCubit>().deleteExpense(expense.id!),
-  },
-    confirmDismiss: (direction) => _confirmDismiss(context),
-    background: Container(
-    color: AppColors.redEB,
-    alignment: Alignment.centerRight,
-    padding: EdgeInsets.only(right: 20.w),
-    child: const Icon(Icons.delete, color: AppColors.whiteFF),
-    ),
-    child: child
-    ,
+      key: Key(expense.id.toString()),
+      direction: DismissDirection.endToStart,
+      onDismissed:
+          (direction) => {
+            context.read<ExpenseCubit>().deleteExpense(expense.id!),
+          },
+      confirmDismiss: (direction) => _confirmDismiss(context),
+      background: Container(
+        color: AppColors.redEB,
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 20.w),
+        child: const Icon(Icons.delete, color: AppColors.whiteFF),
+      ),
+      child: child,
     );
   }
 
@@ -37,8 +40,7 @@ class DismissibleWrapper extends StatelessWidget {
     return await showDialog(
       context: context,
       builder:
-          (context) =>
-          AlertDialog(
+          (context) => AlertDialog(
             title: const Text('Delete Expense'),
             content: const Text(
               'Are you sure you want to delete this expense?',
@@ -56,6 +58,4 @@ class DismissibleWrapper extends StatelessWidget {
           ),
     );
   }
-
-
 }

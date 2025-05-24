@@ -79,10 +79,17 @@ class DashboardContent extends StatelessWidget {
               itemCount: categorySummaries.length,
               itemBuilder: (context, index) {
                 final summary = categorySummaries[index];
-                final category = summary['category'] as CategoryModel;
-                final total = summary['total'] as double;
-
-                return CategoryCard(category: category, total: total);
+                if (summary case {
+                  'category': CategoryModel c,
+                  'total': double t,
+                }) {
+                  return CategoryCard(category: c, total: t);
+                } else {
+                  debugPrint(
+                    'Invalid summary format at index $index: $summary',
+                  );
+                  return SizedBox.shrink();
+                }
               },
             ),
           ),

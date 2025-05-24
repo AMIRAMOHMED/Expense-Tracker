@@ -12,7 +12,7 @@ import '../../logic/expense_cubit.dart';
 class ExpenseContent extends StatelessWidget {
   final ExpenseModel expense;
 
-  const ExpenseContent({required this.expense, Key? key}) : super(key: key);
+  const ExpenseContent({required this.expense, super.key});
 
   @override
   Widget build(BuildContext context) {
